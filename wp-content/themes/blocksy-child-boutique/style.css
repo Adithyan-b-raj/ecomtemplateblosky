@@ -1,0 +1,77 @@
+/*
+Theme Name: Blocksy Child - Boutique Edition
+Theme URI: https://github.com/Adithyan-b-raj/ecomtemplateblosky
+Description: Boutique fashion child theme for Blocksy. Features custom design tokens, boutique typography, stock urgency counter, and India-tailored checkout hooks inspired by Kaka by Eliza.
+Author: Adithyan B Raj
+Author URI: https://github.com/Adithyan-b-raj
+Template: blocksy
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: blocksy-child-boutique
+*/
+
+/* ==========================================================================
+   Design Tokens & Boutique Palette (Matching Kaka by Eliza aesthetic)
+   ========================================================================== */
+:root {
+  --boutique-bg-primary: #FFFDF9;
+  --boutique-bg-card: #FFFFFF;
+  --boutique-text-primary: #1F1F1F;
+  --boutique-text-muted: #666666;
+  --boutique-accent-clay: #B76E58;
+  --boutique-accent-soft: #F4EBE6;
+  --boutique-danger: #D9534F;
+  --boutique-success: #388E3C;
+  --boutique-radius: 8px;
+  --boutique-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+/* ==========================================================================
+   Stock Urgency Bar Component
+   ========================================================================== */
+.boutique-stock-urgency-wrapper {
+  margin: 15px 0 20px;
+  padding: 12px 14px;
+  background-color: var(--boutique-accent-soft);
+  border-radius: var(--boutique-radius);
+  border: 1px solid rgba(183, 110, 88, 0.2);
+}
+
+.boutique-stock-urgency-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--boutique-accent-clay);
+  margin-bottom: 8px;
+}
+
+.boutique-stock-urgency-track {
+  width: 100%;
+  height: 6px;
+  background-color: #E6D9D2;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.boutique-stock-urgency-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #B76E58, #D88972);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ==========================================================================
+   Product Card Micro-interactions
+   ========================================================================== */
+.woocommerce ul.products li.product {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--boutique-radius);
+}
+
+.woocommerce ul.products li.product:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
