@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BLOCKSY_CHILD_BOUTIQUE_VERSION', '1.0.0');
+define('BLOCKSY_CHILD_BOUTIQUE_VERSION', '1.0.1');
 define('BLOCKSY_CHILD_BOUTIQUE_DIR', get_stylesheet_directory());
 define('BLOCKSY_CHILD_BOUTIQUE_URI', get_stylesheet_directory_uri());
 
@@ -70,8 +70,9 @@ function blocksy_child_boutique_scripts() {
 
     // Localize cart subtotal & threshold
     $cart_subtotal = (function_exists('WC') && WC()->cart) ? WC()->cart->get_subtotal() : 0;
+    $threshold = get_option('boutique_free_shipping_threshold', 999);
     wp_localize_script('blocksy-boutique-free-shipping', 'boutiqueSettings', array(
-        'threshold' => apply_filters('boutique_free_shipping_threshold', 999),
+        'threshold' => floatval($threshold),
         'subtotal'  => floatval($cart_subtotal),
         'ajax_url'  => admin_url('admin-ajax.php')
     ));
@@ -92,6 +93,7 @@ add_action('after_setup_theme', 'blocksy_child_boutique_setup');
 /**
  * 3. Include Core Modules
  */
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/admin-dashboard.php';
 require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/stock-inventory.php';
 require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/order-handling.php';
 require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/whatsapp-notifications.php';
