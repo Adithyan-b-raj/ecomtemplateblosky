@@ -1,77 +1,36 @@
 /*
 Theme Name: Blocksy Child - Boutique Edition
 Theme URI: https://github.com/Adithyan-b-raj/ecomtemplateblosky
-Description: Boutique fashion child theme for Blocksy. Features custom design tokens, boutique typography, stock urgency counter, and India-tailored checkout hooks inspired by Kaka by Eliza.
+Description: Boutique fashion child theme for Blocksy. Features exact design tokens, typography, and stock urgency counter extracted from Kaka by Eliza.
 Author: Adithyan B Raj
 Author URI: https://github.com/Adithyan-b-raj
 Template: blocksy
-Version: 1.0.0
+Version: 1.0.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: blocksy-child-boutique
 */
 
 /* ==========================================================================
-   Design Tokens & Boutique Palette (Matching Kaka by Eliza aesthetic)
+   Exact Design Tokens Extracted from Kaka by Eliza (Live Production)
    ========================================================================== */
 :root {
-  --boutique-bg-primary: #FFFDF9;
-  --boutique-bg-card: #FFFFFF;
-  --boutique-text-primary: #1F1F1F;
-  --boutique-text-muted: #666666;
-  --boutique-accent-clay: #B76E58;
-  --boutique-accent-soft: #F4EBE6;
-  --boutique-danger: #D9534F;
-  --boutique-success: #388E3C;
-  --boutique-radius: 8px;
-  --boutique-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-}
+  /* Typography */
+  --boutique-font-primary: 'Jost', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --boutique-font-accent: 'GFS Didot', 'Times New Roman', serif;
 
-/* ==========================================================================
-   Stock Urgency Bar Component
-   ========================================================================== */
-.boutique-stock-urgency-wrapper {
-  margin: 15px 0 20px;
-  padding: 12px 14px;
-  background-color: var(--boutique-accent-soft);
-  border-radius: var(--boutique-radius);
-  border: 1px solid rgba(183, 110, 88, 0.2);
-}
+  /* Colors */
+  --boutique-color-primary: #f76b6a;        /* Exact Kaka by Eliza coral/rose accent */
+  --boutique-color-dark: #161616;           /* Exact Kaka by Eliza button & heading black */
+  --boutique-color-dark-hover: #141414;
+  --boutique-bg-main: #FFFDF9;              /* Warm off-white canvas */
+  --boutique-bg-sand: #FAF6F2;              /* Muted section background */
+  --boutique-bg-bar-track: #EBEBEC;         /* Exact progress track background */
+  --boutique-border: #EAE3DC;               /* Subtle card border */
 
-.boutique-stock-urgency-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--boutique-accent-clay);
-  margin-bottom: 8px;
-}
-
-.boutique-stock-urgency-track {
-  width: 100%;
-  height: 6px;
-  background-color: #E6D9D2;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.boutique-stock-urgency-progress {
-  height: 100%;
-  background: linear-gradient(90deg, #B76E58, #D88972);
-  border-radius: 999px;
-  transition: width 0.3s ease;
-}
-
-/* ==========================================================================
-   Product Card Micro-interactions
-   ========================================================================== */
-.woocommerce ul.products li.product {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-radius: var(--boutique-radius);
-}
-
-.woocommerce ul.products li.product:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  /* Product Grid Dimensions (Exact Elessi Theme Specs) */
+  --boutique-grid-gap-desktop: 35px 20px;
+  --boutique-grid-gap-mobile: 20px 15px;
+  --boutique-radius: 2px;                   /* Exact 2px border-radius from production */
+  --boutique-img-aspect-ratio: 133.33%;     /* 3:4 Portrait Ratio */
 }

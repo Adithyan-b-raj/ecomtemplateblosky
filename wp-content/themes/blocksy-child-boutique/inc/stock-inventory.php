@@ -1,9 +1,10 @@
 <?php
 /**
  * Boutique Stock Handling & Inventory Engine
+ * Directly mapped to Kaka by Eliza features & Step 3 implementation
  *
  * Implements:
- * 1. Urgency stock progress bar
+ * 1. Exact Stock Countdown Bar (Step 3)
  * 2. Mobile sticky add-to-cart markup
  * 3. Product card badges (Low stock, In Store, Sold Out)
  * 4. Catalog in-stock filtering (?in-stock=1)
@@ -17,9 +18,11 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * 1. Single Product Stock Urgency Progress Bar
+ * 1. Step 3: Exact Stock Urgency Countdown Bar
+ * Attached to woocommerce_single_product_summary at priority 15
  */
-function blocksy_boutique_render_stock_urgency() {
+add_action('woocommerce_single_product_summary', 'custom_stock_urgency_bar', 15);
+function custom_stock_urgency_bar() {
     global $product;
 
     if (!$product) {
@@ -27,58 +30,34 @@ function blocksy_boutique_render_stock_urgency() {
     }
 
     $is_variable = $product->is_type('variable');
-    $stock_qty = $product->get_stock_quantity();
+    $stock = $product->get_stock_quantity();
     $in_stock = $product->is_in_stock();
 
-    // If out of stock completely
     if (!$in_stock) {
-        ?>
-        <div class="boutique-stock-urgency-wrapper" data-stock="0">
-            <div class="boutique-stock-urgency-label">
-                <span>⚠️ <strong>Sold Out</strong> — Join waitlist</span>
-                <span class="boutique-stock-urgency-tag">Exclusive Batch</span>
-            </div>
-            <div class="boutique-stock-urgency-track">
-                <div class="boutique-stock-urgency-progress" style="width: 0%; background: #9E9E9E;"></div>
-            </div>
-        </div>
-        <?php
+        echo '<div class="custom-stock-bar" data-stock="0">
+                <span>⚠️ <b>Sold Out</b> — Join waitlist</span>
+                <div class="progress-track"><div class="progress-fill" style="width:0%; background:#9E9E9E;"></div></div>
+              </div>';
         return;
     }
 
-    // For variable products, output container that JS will update on swatch click
+    // For variable products: container that updates dynamically via JS on size click
     if ($is_variable) {
-        ?>
-        <div class="boutique-stock-urgency-wrapper" data-default-stock="<?php echo esc_attr($stock_qty ?: 10); ?>">
-            <div class="boutique-stock-urgency-label">
-                <span>✨ <strong>Real-time Stock:</strong> Select your size below</span>
-                <span class="boutique-stock-urgency-tag">Handcrafted Boutique</span>
-            </div>
-            <div class="boutique-stock-urgency-track">
-                <div class="boutique-stock-urgency-progress" style="width: 100%;"></div>
-            </div>
-        </div>
-        <?php
+        echo '<div class="custom-stock-bar" data-default-stock="' . esc_attr($stock ?: 10) . '">
+                <span>✨ <b>Real-time Stock:</b> Select your size below</span>
+                <div class="progress-track"><div class="progress-fill" style="width:100%;"></div></div>
+              </div>';
         return;
     }
 
-    // For simple products with limited stock
-    if ($stock_qty && $stock_qty <= 5) {
-        $pct = min(100, max(15, ($stock_qty / 10) * 100));
-        ?>
-        <div class="boutique-stock-urgency-wrapper" data-stock="<?php echo esc_attr($stock_qty); ?>">
-            <div class="boutique-stock-urgency-label">
-                <span>🔥 Only <strong><?php echo esc_html($stock_qty); ?></strong> left in stock</span>
-                <span class="boutique-stock-urgency-tag">Limited Batch</span>
-            </div>
-            <div class="boutique-stock-urgency-track">
-                <div class="boutique-stock-urgency-progress" style="width: <?php echo esc_attr($pct); ?>%;"></div>
-            </div>
-        </div>
-        <?php
+    // For simple products with limited stock (<= 5)
+    if ($stock && $stock <= 5) {
+        echo '<div class="custom-stock-bar" data-stock="' . esc_attr($stock) . '">
+                <span>Only <b>' . esc_html($stock) . '</b> left in stock!</span>
+                <div class="progress-track"><div class="progress-fill" style="width:' . esc_attr($stock * 20) . '%"></div></div>
+              </div>';
     }
 }
-add_action('woocommerce_single_product_summary', 'blocksy_boutique_render_stock_urgency', 15);
 
 /**
  * 2. Mobile Sticky Add to Cart Bar Markup
@@ -117,9 +96,9 @@ function blocksy_boutique_product_loop_badges() {
         return;
     }
 
-    // In Store category badge
+    // In Store category badge (Matching kakabyeliza.com in-store collection)
     if (has_term('in-store', 'product_cat', $product->get_id())) {
-        echo '<span class="boutique-badge in-store">In Store Only</span>';
+        echo '<span class="boutique-badge in-store">In Store</span>';
         return;
     }
 

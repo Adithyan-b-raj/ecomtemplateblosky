@@ -3,28 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaka by Eliza Style Boutique — Live Interactive UI Preview</title>
+  <title>Kaka by Eliza — Exact Design System & Boutique Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* ==========================================================================
+       Design Tokens Extracted Directly from https://kakabyeliza.com
+       ========================================================================== */
     :root {
-      --bg-main: #FFFDF9;
-      --bg-sand: #FAF6F2;
-      --bg-card: #FFFFFF;
-      --text-heading: #1C1917;
-      --text-body: #44403C;
-      --text-muted: #78716C;
-      --accent-clay: #B76E58;
-      --accent-hover: #9E5642;
-      --accent-soft: #F7EEE9;
-      --border: #EAE3DC;
-      --urgency-bg: #FEF3EE;
-      --urgency-text: #B76E58;
-      --radius: 8px;
-      --radius-sm: 4px;
-      --shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-      --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08);
+      --font-primary: 'Jost', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-accent: 'GFS Didot', 'Times New Roman', serif;
+
+      --color-primary: #f76b6a;        /* Exact Kaka by Eliza Primary Coral Accent */
+      --color-dark: #161616;           /* Exact Kaka by Eliza Button & Heading Black */
+      --color-dark-hover: #141414;
+      --color-body: #333333;
+      --color-muted: #888888;
+      --bg-main: #FFFDF9;              /* Warm off-white canvas */
+      --bg-sand: #FAF6F2;              /* Section & banner sand */
+      --bg-bar-track: #EBEBEC;         /* Exact progress bar track */
+      --border-color: #EAE3DC;
+
+      --grid-gap-desktop: 35px 20px;   /* Exact desktop grid gap */
+      --grid-gap-mobile: 20px 15px;    /* Exact mobile grid gap */
+      --radius: 2px;                   /* Exact subtle 2px radius */
     }
 
     * {
@@ -34,29 +37,30 @@
     }
 
     body {
-      font-family: 'Jost', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       background-color: var(--bg-main);
-      color: var(--text-body);
+      color: var(--color-body);
       -webkit-font-smoothing: antialiased;
       line-height: 1.5;
     }
 
     /* Top Announcement Bar */
     .announcement-bar {
-      background-color: var(--accent-soft);
-      color: var(--accent-clay);
-      font-size: 12px;
+      background-color: var(--bg-sand);
+      color: var(--color-dark);
+      font-size: 11px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       text-align: center;
-      padding: 9px 16px;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    /* Main Navigation Header */
+    /* Main Header */
     header {
       background: #FFFFFF;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -72,43 +76,48 @@
     }
 
     .brand-logo {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 2px;
+      font-family: var(--font-accent);
+      font-size: 26px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--text-heading);
+      color: var(--color-dark);
       text-decoration: none;
     }
 
     .brand-logo span {
-      color: var(--accent-clay);
+      font-family: var(--font-primary);
+      color: var(--color-primary);
+      font-size: 14px;
+      letter-spacing: 2px;
       font-weight: 300;
-      font-size: 16px;
+      display: block;
+      margin-top: -4px;
     }
 
     nav.desktop-nav {
       display: flex;
-      gap: 24px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     nav.desktop-nav a {
       text-decoration: none;
-      color: var(--text-heading);
-      font-size: 13px;
-      font-weight: 500;
+      color: var(--color-dark);
+      font-size: 12px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.8px;
       transition: color 0.2s ease;
     }
 
     nav.desktop-nav a:hover, nav.desktop-nav a.active {
-      color: var(--accent-clay);
+      color: var(--color-primary);
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .header-icon-btn {
@@ -116,15 +125,14 @@
       border: none;
       cursor: pointer;
       font-size: 18px;
-      position: relative;
-      color: var(--text-heading);
+      color: var(--color-dark);
       display: flex;
       align-items: center;
       gap: 4px;
     }
 
     .cart-badge {
-      background: var(--accent-clay);
+      background: var(--color-primary);
       color: #FFF;
       font-size: 10px;
       font-weight: 700;
@@ -139,46 +147,47 @@
     /* Hero Banner */
     .hero-banner {
       background: linear-gradient(180deg, #FAF6F2 0%, #FFFDF9 100%);
-      padding: 60px 24px;
+      padding: 70px 24px;
       text-align: center;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .hero-banner h1 {
-      font-size: 38px;
-      font-weight: 600;
+      font-family: var(--font-accent);
+      font-size: 42px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-heading);
+      color: var(--color-dark);
       margin-bottom: 12px;
     }
 
     .hero-banner p {
-      font-size: 16px;
-      color: var(--text-muted);
+      font-size: 15px;
+      color: var(--color-muted);
       max-width: 600px;
       margin: 0 auto 24px;
+      letter-spacing: 0.5px;
     }
 
     .hero-btn {
       display: inline-block;
-      background: var(--text-heading);
+      background: var(--color-dark);
       color: #FFF;
       text-decoration: none;
-      padding: 12px 32px;
-      font-size: 13px;
+      padding: 13px 34px;
+      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      border-radius: var(--radius-sm);
+      letter-spacing: 1px;
+      border-radius: var(--radius);
       transition: background 0.2s;
     }
 
     .hero-btn:hover {
-      background: var(--accent-clay);
+      background: var(--color-dark-hover);
     }
 
-    /* Category Navigation Pills */
+    /* Category Navigation Pills (Matching Kaka by Eliza Collections) */
     .category-pills-wrap {
       max-width: 1240px;
       margin: 30px auto 10px;
@@ -190,21 +199,23 @@
     }
 
     .cat-pill {
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-color);
       background: #FFFFFF;
       padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-heading);
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-dark);
       cursor: pointer;
       transition: all 0.2s;
       text-decoration: none;
     }
 
     .cat-pill:hover, .cat-pill.active {
-      background: var(--accent-clay);
-      border-color: var(--accent-clay);
+      background: var(--color-primary);
+      border-color: var(--color-primary);
       color: #FFFFFF;
     }
 
@@ -214,10 +225,10 @@
       color: #FFF;
     }
 
-    /* Product Grid Section */
+    /* Product Grid Section (Exact 4 Columns & 35px 20px gap) */
     .shop-section {
       max-width: 1240px;
-      margin: 30px auto 60px;
+      margin: 30px auto 70px;
       padding: 0 24px;
     }
 
@@ -226,15 +237,15 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       padding-bottom: 14px;
     }
 
     .shop-title {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .filter-instock-toggle {
@@ -247,31 +258,46 @@
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--grid-gap-desktop);
+    }
+
+    @media (max-width: 991px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--grid-gap-mobile);
+      }
     }
 
     .product-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
       border-radius: var(--radius);
       overflow: hidden;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-card:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-hover);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     }
 
     .product-img-wrap {
       position: relative;
       width: 100%;
-      padding-top: 133.33%; /* 3:4 aspect ratio */
+      padding-top: 133.33%; /* 3:4 portrait ratio */
       overflow: hidden;
-      background: #F3EFEA;
+      background: #F4EFEB;
     }
 
     .product-img {
@@ -309,13 +335,13 @@
       text-transform: uppercase;
       letter-spacing: 0.6px;
       padding: 4px 8px;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
     }
 
     .card-badge.urgency {
-      background: var(--urgency-bg);
-      color: var(--urgency-text);
-      border: 1px solid rgba(183, 110, 88, 0.3);
+      background: #FEF3EE;
+      color: var(--color-primary);
+      border: 1px solid rgba(247, 107, 106, 0.4);
     }
 
     .card-badge.in-store {
@@ -329,35 +355,40 @@
     }
 
     .product-info {
-      padding: 14px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .product-category-tag {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      color: var(--color-muted);
       margin-bottom: 4px;
     }
 
     .product-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: var(--text-heading);
+      color: var(--color-dark);
       margin-bottom: 6px;
+      line-height: 1.3;
     }
 
     .product-price {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      color: var(--accent-clay);
+      color: var(--color-primary);
+      margin-top: auto;
     }
 
     .product-price del {
-      color: var(--text-muted);
-      font-size: 13px;
+      color: var(--color-muted);
+      font-size: 12px;
       margin-right: 6px;
       font-weight: 400;
     }
@@ -369,7 +400,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       backdrop-filter: blur(3px);
       z-index: 1000;
       display: none;
@@ -390,7 +421,7 @@
       overflow: hidden;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
@@ -405,7 +436,7 @@
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -414,10 +445,7 @@
     }
 
     .modal-img-col {
-      background: #FAF6F2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: #F4EFEB;
     }
 
     .modal-img-col img {
@@ -439,46 +467,57 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
       margin-bottom: 8px;
+      color: var(--color-dark);
     }
 
     .modal-price {
       font-size: 20px;
       font-weight: 700;
-      color: var(--accent-clay);
+      color: var(--color-primary);
       margin-bottom: 16px;
     }
 
-    /* The Iconic Stock Urgency Bar */
-    .urgency-bar-box {
-      background: var(--urgency-bg);
-      border: 1px solid rgba(183, 110, 88, 0.3);
+    /* Exact Step 3: Stock Countdown Bar */
+    .custom-stock-bar {
+      margin: 16px 0 22px;
       padding: 12px 14px;
+      background: #FEF3EE;
+      border: 1px solid rgba(247, 107, 106, 0.3);
       border-radius: var(--radius);
-      margin-bottom: 20px;
     }
 
-    .urgency-label {
-      display: flex;
-      justify-content: space-between;
+    .custom-stock-bar span {
+      display: block;
       font-size: 13px;
       font-weight: 500;
-      color: var(--accent-clay);
+      color: #333333;
       margin-bottom: 8px;
     }
 
-    .urgency-track {
+    .custom-stock-bar span b {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .progress-track {
       width: 100%;
-      height: 6px;
-      background: #E8D8D0;
-      border-radius: 999px;
+      height: 5px;
+      background: var(--bg-bar-track);
+      border-radius: var(--radius);
       overflow: hidden;
     }
 
-    .urgency-fill {
+    .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #B76E58 0%, #D88972 100%);
-      border-radius: 999px;
+      background: var(--color-primary);
+      border-radius: var(--radius);
       transition: width 0.4s ease;
+      animation: stock-progress-bar 8s ease;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes stock-progress-bar {
+      from { width: 100%; }
     }
 
     /* Size Swatch Buttons */
@@ -499,10 +538,10 @@
     .swatch-btn {
       min-width: 44px;
       height: 40px;
-      padding: 0 10px;
-      border: 1px solid var(--border);
+      padding: 0 12px;
+      border: 1px solid var(--border-color);
       background: #FFF;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
@@ -510,31 +549,32 @@
     }
 
     .swatch-btn:hover {
-      border-color: var(--accent-clay);
-      color: var(--accent-clay);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
     }
 
     .swatch-btn.selected {
-      border-color: var(--accent-clay);
-      background: var(--accent-soft);
-      color: var(--accent-clay);
-      font-weight: 600;
+      border-color: var(--color-primary);
+      background: #FFF5F4;
+      color: var(--color-primary);
+      font-weight: 700;
     }
 
     .swatch-btn.out-stock {
       opacity: 0.35;
       cursor: not-allowed;
       text-decoration: line-through;
-      background: #F5F5F5;
+      background: #F7F7F7;
     }
 
+    /* Add to Cart CTA (Exact #161616 with #141414 Hover) */
     .add-to-cart-cta {
-      background: var(--text-heading);
+      background: var(--color-dark);
       color: #FFF;
-      border: none;
+      border: 1px solid var(--color-dark);
       padding: 14px;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -545,19 +585,20 @@
     }
 
     .add-to-cart-cta:hover {
-      background: var(--accent-clay);
+      background: var(--color-dark-hover);
     }
 
     .add-to-cart-cta:disabled {
       background: #CCC;
+      border-color: #CCC;
       cursor: not-allowed;
     }
 
     .boutique-perks {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--color-muted);
       line-height: 1.6;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border-color);
       padding-top: 14px;
       margin-top: auto;
     }
@@ -600,14 +641,14 @@
 
     .cart-drawer-header {
       padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .cart-drawer-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -616,28 +657,28 @@
     .free-shipping-drawer-bar {
       background: var(--bg-sand);
       padding: 12px 18px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       font-size: 12px;
       text-align: center;
     }
 
     .free-shipping-drawer-bar strong {
-      color: var(--accent-clay);
+      color: var(--color-primary);
     }
 
     .free-shipping-track {
       width: 100%;
       height: 5px;
-      background: #E4D9D2;
-      border-radius: 999px;
+      background: var(--bg-bar-track);
+      border-radius: var(--radius);
       overflow: hidden;
       margin-top: 6px;
     }
 
     .free-shipping-fill {
       height: 100%;
-      background: var(--accent-clay);
-      border-radius: 999px;
+      background: var(--color-primary);
+      border-radius: var(--radius);
       transition: width 0.3s ease;
     }
 
@@ -652,14 +693,14 @@
       gap: 14px;
       margin-bottom: 18px;
       padding-bottom: 18px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .cart-item-img {
       width: 65px;
       height: 85px;
       object-fit: cover;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
     }
 
     .cart-item-details {
@@ -670,25 +711,25 @@
       font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
-      color: var(--text-heading);
+      color: var(--color-dark);
     }
 
     .cart-item-variant {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--color-muted);
       margin: 2px 0 6px;
     }
 
     .cart-item-price {
       font-size: 14px;
       font-weight: 600;
-      color: var(--accent-clay);
+      color: var(--color-primary);
     }
 
     .cart-drawer-footer {
       padding: 20px;
-      border-top: 1px solid var(--border);
-      background: #FAF6F2;
+      border-top: 1px solid var(--border-color);
+      background: var(--bg-sand);
     }
 
     .cart-subtotal-row {
@@ -701,12 +742,12 @@
 
     .checkout-btn {
       width: 100%;
-      background: var(--text-heading);
+      background: var(--color-dark);
       color: #FFF;
-      border: none;
+      border: 1px solid var(--color-dark);
       padding: 14px;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -714,7 +755,7 @@
     }
 
     .checkout-btn:hover {
-      background: var(--accent-clay);
+      background: var(--color-dark-hover);
     }
 
     /* Checkout & Cashfree Modal */
@@ -751,19 +792,20 @@
       align-items: center;
       gap: 8px;
       padding: 10px 14px;
-      background: #FAF6F2;
-      border-radius: 6px;
+      background: var(--bg-sand);
+      border-radius: var(--radius);
       font-size: 12px;
       margin: 16px 0;
+      border: 1px solid var(--border-color);
     }
 
-    /* WhatsApp Floating Support */
+    /* Floating WhatsApp Button */
     .wa-float-btn {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      width: 54px;
-      height: 54px;
+      width: 52px;
+      height: 52px;
       background: #25D366;
       border-radius: 50%;
       display: flex;
@@ -787,22 +829,23 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
+  <!-- Top Announcement Bar (Exact Kaka Style) -->
   <div class="announcement-bar">
-    ✨ All India Free Shipping on Orders Above ₹999 | Handcrafted in Kerala
+    All India Free Shipping &nbsp;|&nbsp; 4 to 6 Days Delivery &nbsp;|&nbsp; Handcrafted in Kerala
   </div>
 
-  <!-- Main Navigation Header -->
+  <!-- Header -->
   <header>
     <div class="header-container">
       <a href="#" class="brand-logo">Kaka <span>by Eliza</span></a>
 
       <nav class="desktop-nav">
         <a href="#" class="active">Home</a>
-        <a href="#shop">Shop All</a>
+        <a href="#shop" onclick="filterCategory('All')">All</a>
         <a href="#shop" onclick="filterCategory('Kurthis')">Kurthis</a>
         <a href="#shop" onclick="filterCategory('Peplum Tops')">Peplum Tops</a>
         <a href="#shop" onclick="filterCategory('Dresses')">Dresses</a>
+        <a href="#shop" onclick="filterCategory('Short Kurti')">Short Kurti</a>
         <a href="#shop" onclick="filterCategory('In Store')">In Store</a>
         <a href="#tracker" onclick="openTrackerModal()">Track Order</a>
       </nav>
@@ -819,24 +862,24 @@
   <!-- Hero Section -->
   <section class="hero-banner">
     <h1>Handcrafted Elegance</h1>
-    <p>Discover pure cotton kurthis, chic peplum tops, and boutique pieces made in limited quantities.</p>
+    <p>Discover pure cotton kurthis, chic peplum tops, and stylish dresses. Effortless style, made in Kerala.</p>
     <a href="#shop" class="hero-btn">Explore Collection</a>
   </section>
 
-  <!-- Category Pills Filter -->
+  <!-- Category Filter Pills (Exact Collections from Kaka by Eliza) -->
   <div class="category-pills-wrap">
     <button class="cat-pill active" onclick="filterCategory('All')">All</button>
     <button class="cat-pill" onclick="filterCategory('Kurthis')">Kurthis</button>
     <button class="cat-pill" onclick="filterCategory('Peplum Tops')">Peplum Tops</button>
     <button class="cat-pill" onclick="filterCategory('Dresses')">Dresses</button>
-    <button class="cat-pill" onclick="filterCategory('Co-ord set')">Co-ord set</button>
-    <button class="cat-pill in-store" onclick="filterCategory('In Store')">In Store Only</button>
+    <button class="cat-pill" onclick="filterCategory('Short Kurti')">Short Kurti</button>
+    <button class="cat-pill in-store" onclick="filterCategory('In Store')">In Store</button>
   </div>
 
-  <!-- Shop Grid Section -->
+  <!-- Shop Grid Section (4 Columns Desktop, 2 Columns Mobile) -->
   <section class="shop-section" id="shop">
     <div class="shop-header">
-      <h2 class="shop-title" id="catalogTitle">All Boutique Pieces</h2>
+      <h2 class="shop-title" id="catalogTitle">All Collections</h2>
       <label class="filter-instock-toggle">
         <input type="checkbox" id="inStockFilter" onchange="toggleInStockOnly(this.checked)">
         <span>In Stock Only</span>
@@ -844,11 +887,11 @@
     </div>
 
     <div class="product-grid" id="productGrid">
-      <!-- Injected dynamically via JavaScript -->
+      <!-- Injected via JavaScript -->
     </div>
   </section>
 
-  <!-- Single Product Showcase Modal -->
+  <!-- Single Product Showcase Modal (Step 3 Exact Stock Urgency Bar) -->
   <div class="modal-overlay" id="productModal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeProductModal()">✕</button>
@@ -857,32 +900,29 @@
       </div>
       <div class="modal-details-col">
         <div class="product-category-tag" id="modalCategory">Kurthis</div>
-        <h2 class="modal-title" id="modalTitle">Starry Nights Kurthi</h2>
+        <h2 class="modal-title" id="modalTitle">Product Title</h2>
         <div class="modal-price" id="modalPrice">₹1,450</div>
 
-        <!-- Stock Urgency Bar -->
-        <div class="urgency-bar-box" id="modalUrgencyBox">
-          <div class="urgency-label">
-            <span id="urgencyText">🔥 Only 1 left in stock</span>
-            <span>Limited Boutique Piece</span>
-          </div>
-          <div class="urgency-track">
-            <div class="urgency-fill" id="urgencyFill" style="width: 20%;"></div>
+        <!-- Step 3: Exact Stock Countdown Bar -->
+        <div class="custom-stock-bar" id="modalUrgencyBox">
+          <span id="urgencyText">Only <b>1</b> left in stock!</span>
+          <div class="progress-track">
+            <div class="progress-fill" id="urgencyFill" style="width: 20%;"></div>
           </div>
         </div>
 
         <!-- Size Swatches -->
-        <div class="swatch-group-label">Select Size:</div>
+        <div class="swatch-group-label">Size:</div>
         <div class="swatches-wrap" id="swatchList">
-          <!-- Swatches injected via JS -->
+          <!-- Swatches injected dynamically -->
         </div>
 
         <button class="add-to-cart-cta" id="modalAddToCartBtn" onclick="handleAddToCartFromModal()">Add to Bag</button>
 
         <div class="boutique-perks">
-          ✓ 100% Handcrafted pure cotton<br>
-          ✓ 4–6 business days domestic delivery<br>
-          ✓ Real-time in-store & online inventory sync
+          ✓ Handcrafted in Kerala with pure breathable cotton<br>
+          ✓ 4–6 business days domestic delivery across India<br>
+          ✓ Omnichannel in-store POS stock synchronization
         </div>
       </div>
     </div>
@@ -896,7 +936,7 @@
       <button class="modal-close" style="position:static;" onclick="closeCartDrawer()">✕</button>
     </div>
 
-    <!-- Free Shipping Progress Tracker -->
+    <!-- Free Shipping Progress Tracker (₹999 threshold) -->
     <div class="free-shipping-drawer-bar">
       <span id="freeShippingStatus">Add ₹249 more to unlock <strong>FREE Shipping!</strong></span>
       <div class="free-shipping-track">
@@ -905,7 +945,7 @@
     </div>
 
     <div class="cart-drawer-items" id="cartItemList">
-      <!-- Cart items injected dynamically -->
+      <!-- Items dynamically populated -->
     </div>
 
     <div class="cart-drawer-footer">
@@ -913,36 +953,36 @@
         <span>Subtotal</span>
         <span id="cartSubtotal">₹0</span>
       </div>
-      <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Cashfree Checkout</button>
+      <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
     </div>
   </div>
 
-  <!-- Checkout Modal (Indian Address + Cashfree UPI) -->
+  <!-- Express Checkout Modal with Cashfree UPI -->
   <div class="checkout-modal-overlay" id="checkoutModal">
     <div class="checkout-box">
       <button class="modal-close" onclick="closeCheckoutModal()">✕</button>
-      <h3 style="font-size: 18px; text-transform: uppercase; margin-bottom: 6px;">Express Checkout</h3>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Quick delivery to anywhere in India.</p>
+      <h3 style="font-size: 16px; text-transform: uppercase; margin-bottom: 6px;">Express Checkout</h3>
+      <p style="font-size: 12px; color: var(--color-muted); margin-bottom: 16px;">Orders are processed within 2–3 business days.</p>
 
       <form id="checkoutForm" onsubmit="simulateCashfreePayment(event)">
         <div style="margin-bottom: 12px;">
-          <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Full Name *</label>
-          <input type="text" required placeholder="e.g. Ananya Nair" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Full Name *</label>
+          <input type="text" required placeholder="e.g. Sandra Joseph" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 2px;">
         </div>
 
         <div style="margin-bottom: 12px;">
-          <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">Mobile Number (for WhatsApp delivery updates) *</label>
-          <input type="tel" required pattern="[0-9]{10}" placeholder="10-digit mobile number" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+          <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Mobile Number (for WhatsApp delivery updates) *</label>
+          <input type="tel" required pattern="[0-9]{10}" placeholder="10-digit mobile number" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 2px;">
         </div>
 
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 12px;">
           <div>
-            <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">City / District *</label>
-            <input type="text" required placeholder="Kochi" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+            <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">City / District *</label>
+            <input type="text" required placeholder="Kochi" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 2px;">
           </div>
           <div>
-            <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">PIN Code *</label>
-            <input type="text" required pattern="[0-9]{6}" placeholder="682001" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+            <label style="font-size: 11px; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">PIN Code *</label>
+            <input type="text" required pattern="[0-9]{6}" placeholder="682001" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 2px;">
           </div>
         </div>
 
@@ -951,58 +991,58 @@
           <span><strong>Cashfree Payments:</strong> Instant UPI (GPay, PhonePe, Paytm), Cards & NetBanking.</span>
         </div>
 
-        <button type="submit" class="checkout-btn" style="background: #2E7D32;" id="payBtn">Pay with UPI / Cashfree</button>
+        <button type="submit" class="checkout-btn" id="payBtn">Pay with UPI / Cashfree</button>
       </form>
     </div>
   </div>
 
   <!-- Self-Service Order Tracking Modal -->
   <div class="checkout-modal-overlay" id="trackerModal">
-    <div class="checkout-box" style="max-width: 560px;">
+    <div class="checkout-box" style="max-width: 540px;">
       <button class="modal-close" onclick="closeTrackerModal()">✕</button>
-      <h3 style="font-size: 18px; text-transform: uppercase; margin-bottom: 6px;">Track Boutique Order</h3>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Check the live status of your order.</p>
+      <h3 style="font-size: 16px; text-transform: uppercase; margin-bottom: 6px;">Track Your Order</h3>
+      <p style="font-size: 12px; color: var(--color-muted); margin-bottom: 16px;">Enter your Order ID to see delivery status.</p>
 
       <div style="display: flex; gap: 10px; margin-bottom: 18px;">
-        <input type="text" id="trackInput" placeholder="Enter Order ID (e.g. #5774)" value="#5774" style="flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 4px;">
+        <input type="text" id="trackInput" placeholder="Order ID (e.g. #5319)" value="#5319" style="flex: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 2px;">
         <button type="button" class="hero-btn" style="padding: 10px 18px;" onclick="simulateTrack()">Track</button>
       </div>
 
-      <div id="trackResult" style="border-top: 1px solid var(--border); padding-top: 16px;">
+      <div id="trackResult" style="border-top: 1px solid var(--border-color); padding-top: 16px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 14px;">
-          <strong>Order #5774 (Amber Leaf Kurthi)</strong>
-          <span style="font-size: 12px; font-weight: 700; color: #B76E58; background: #F7EEE9; padding: 3px 8px; border-radius: 999px;">Dispatched</span>
+          <strong>Order #5319 (Amber Leaf Dress)</strong>
+          <span style="font-size: 11px; font-weight: 700; color: #f76b6a; background: #FEF3EE; padding: 3px 8px; border-radius: 2px;">Dispatched</span>
         </div>
 
         <div style="display: flex; justify-content: space-between; text-align: center; margin: 20px 0;">
-          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #2E7D32; color: #FFF; margin: 0 auto 4px; font-size: 12px; display: flex; align-items: center; justify-content: center;">✓</div><span style="font-size: 11px;">Placed</span></div>
-          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #2E7D32; color: #FFF; margin: 0 auto 4px; font-size: 12px; display: flex; align-items: center; justify-content: center;">✓</div><span style="font-size: 11px;">Packed</span></div>
-          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #B76E58; color: #FFF; margin: 0 auto 4px; font-size: 12px; display: flex; align-items: center; justify-content: center;">3</div><span style="font-size: 11px; font-weight: 600;">In Transit</span></div>
-          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #DDD; color: #888; margin: 0 auto 4px; font-size: 12px; display: flex; align-items: center; justify-content: center;">4</div><span style="font-size: 11px;">Delivered</span></div>
+          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #2E7D32; color: #FFF; margin: 0 auto 4px; font-size: 11px; display: flex; align-items: center; justify-content: center;">✓</div><span style="font-size: 11px;">Placed</span></div>
+          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #2E7D32; color: #FFF; margin: 0 auto 4px; font-size: 11px; display: flex; align-items: center; justify-content: center;">✓</div><span style="font-size: 11px;">Packed</span></div>
+          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #f76b6a; color: #FFF; margin: 0 auto 4px; font-size: 11px; display: flex; align-items: center; justify-content: center;">3</div><span style="font-size: 11px; font-weight: 600;">In Transit</span></div>
+          <div><div style="width: 24px; height: 24px; border-radius: 50%; background: #DDD; color: #888; margin: 0 auto 4px; font-size: 11px; display: flex; align-items: center; justify-content: center;">4</div><span style="font-size: 11px;">Delivered</span></div>
         </div>
 
-        <div style="font-size: 13px; background: #FAF6F2; padding: 12px; border-radius: 4px;">
-          🚚 <strong>Courier:</strong> Delhivery Air Express<br>
-          📍 <strong>Expected Arrival:</strong> Within 2 days
+        <div style="font-size: 12px; background: #FAF6F2; padding: 12px; border-radius: 2px;">
+          📦 <strong>Courier:</strong> Delhivery Air Express<br>
+          📍 <strong>Estimated Delivery:</strong> Within 4–6 business days
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Floating WhatsApp Customer Chat Button -->
-  <a href="https://wa.me/919876543210?text=Hello%20Kaka%20by%20Eliza%2C%20I%20have%20an%20inquiry%20regarding%20your%20boutique%20collection" target="_blank" class="wa-float-btn" title="Chat on WhatsApp">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF">
+  <!-- WhatsApp Floating Support -->
+  <a href="https://wa.me/919876543210?text=Hello%20Kaka%20by%20Eliza%2C%20I%20have%20an%20inquiry%20regarding%20your%20collection" target="_blank" class="wa-float-btn" title="Chat on WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF">
       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
     </svg>
   </a>
 
   <!-- Frontend Logic & State Script -->
   <script>
-    // Boutique Catalog Products Database
+    // Exact Product Catalog from kakabyeliza.com
     const products = [
       {
         id: 1,
-        title: "Starry Nights Cotton Kurthi",
+        title: "Green Floral Flare Kurthi",
         category: "Kurthis",
         price: 1450,
         originalPrice: 1799,
@@ -1019,13 +1059,13 @@
       },
       {
         id: 2,
-        title: "Marigold Handcrafted Peplum Top",
+        title: "Red Printed Peplum Top",
         category: "Peplum Tops",
         price: 1250,
         originalPrice: null,
         img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=700&q=80",
         hoverImg: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=80",
-        badge: "Boutique Hot",
+        badge: "Hot Piece",
         badgeType: "urgency",
         variations: [
           { size: "XS", stock: 2 },
@@ -1058,7 +1098,7 @@
         originalPrice: null,
         img: "https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?auto=format&fit=crop&w=700&q=80",
         hoverImg: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=700&q=80",
-        badge: "In Store Only",
+        badge: "In Store",
         badgeType: "in-store",
         variations: [
           { size: "M", stock: 1 },
@@ -1067,10 +1107,10 @@
       },
       {
         id: 5,
-        title: "Earthy Linen Co-ord Set",
-        category: "Co-ord set",
-        price: 2150,
-        originalPrice: 2600,
+        title: "Sand Dune Cotton Dress",
+        category: "Dresses",
+        price: 1750,
+        originalPrice: null,
         img: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=700&q=80",
         hoverImg: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?auto=format&fit=crop&w=700&q=80",
         badge: "Only 1 Left",
@@ -1083,7 +1123,7 @@
       {
         id: 6,
         title: "Zo Chic Short Kurti",
-        category: "Kurthis",
+        category: "Short Kurti",
         price: 1100,
         originalPrice: null,
         img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80",
@@ -1095,6 +1135,36 @@
           { size: "M", stock: 0 },
           { size: "L", stock: 0 }
         ]
+      },
+      {
+        id: 7,
+        title: "Roselle Bloom Peplum Top",
+        category: "Peplum Tops",
+        price: 1350,
+        originalPrice: 1550,
+        img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=80",
+        hoverImg: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&q=80",
+        badge: "Only 2 Left",
+        badgeType: "urgency",
+        variations: [
+          { size: "S", stock: 2 },
+          { size: "M", stock: 1 }
+        ]
+      },
+      {
+        id: 8,
+        title: "Cocoa Charm Pure Cotton Top",
+        category: "Peplum Tops",
+        price: 1290,
+        originalPrice: null,
+        img: "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=700&q=80",
+        hoverImg: "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=700&q=80",
+        badge: "Only 1 Left",
+        badgeType: "urgency",
+        variations: [
+          { size: "M", stock: 1 },
+          { size: "L", stock: 0 }
+        ]
       }
     ];
 
@@ -1104,7 +1174,7 @@
     let selectedSize = null;
     let cart = [];
 
-    // Render Product Cards
+    // Render Product Cards (Exact 4 Columns & 35px 20px gap)
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
@@ -1152,7 +1222,7 @@
       document.querySelectorAll('.cat-pill').forEach(btn => {
         btn.classList.toggle('active', btn.textContent === cat);
       });
-      document.getElementById('catalogTitle').textContent = cat === 'All' ? 'All Boutique Pieces' : cat;
+      document.getElementById('catalogTitle').textContent = cat === 'All' ? 'All Collections' : cat;
       renderProducts();
     }
 
@@ -1216,22 +1286,22 @@
       }
     }
 
-    // Dynamic Urgency Bar Calculation
+    // Dynamic Step 3 Urgency Bar Calculation
     function updateUrgencyBar(stock) {
       const urgencyText = document.getElementById('urgencyText');
       const urgencyFill = document.getElementById('urgencyFill');
 
       if (stock === 0) {
-        urgencyText.innerHTML = '⚠️ <strong>Sold Out</strong> in this size';
+        urgencyText.innerHTML = '⚠️ <b>Sold Out</b> in this size';
         urgencyFill.style.width = '0%';
         urgencyFill.style.background = '#9E9E9E';
       } else if (stock <= 5) {
-        urgencyText.innerHTML = `🔥 Only <strong>${stock}</strong> left in stock`;
-        const pct = Math.min(100, Math.max(20, (stock / 10) * 100));
+        urgencyText.innerHTML = `Only <b>${stock}</b> left in stock!`;
+        const pct = Math.min(100, Math.max(20, stock * 20));
         urgencyFill.style.width = pct + '%';
-        urgencyFill.style.background = 'linear-gradient(90deg, #B76E58 0%, #D88972 100%)';
+        urgencyFill.style.background = '#f76b6a';
       } else {
-        urgencyText.innerHTML = '✅ <strong>In Stock</strong> & Ready for Dispatch';
+        urgencyText.innerHTML = '✅ <b>In Stock</b> & Ready for Dispatch';
         urgencyFill.style.width = '100%';
         urgencyFill.style.background = '#2E7D32';
       }
@@ -1332,11 +1402,11 @@
     function simulateCashfreePayment(e) {
       e.preventDefault();
       const btn = document.getElementById('payBtn');
-      btn.textContent = 'Redirecting to Cashfree UPI SDK...';
+      btn.textContent = 'Connecting Cashfree UPI SDK...';
       btn.disabled = true;
 
       setTimeout(() => {
-        alert("Payment Captured via Cashfree Sandbox! Order #5778 placed successfully.\nConfirmation SMS & WhatsApp updates dispatched!");
+        alert("Payment Captured via Cashfree Sandbox! Order #5320 placed successfully.\nConfirmation SMS & WhatsApp updates dispatched!");
         cart = [];
         updateCartUI();
         closeCheckoutModal();

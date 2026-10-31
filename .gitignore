@@ -9,13 +9,16 @@ desktop.ini
 *.swp
 *.swo
 
+# Temporary scratch inspection scripts
+scratch/
+
 # WordPress uploads and sensitive files
 wp-config.php
 wp-content/uploads/
 wp-content/cache/
 *.log
 
-# Node & Build artifacts (if any tools used)
+# Node & Build artifacts
 node_modules/
 dist/
 .env
