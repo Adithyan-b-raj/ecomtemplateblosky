@@ -1,33 +1,85 @@
 <?php
 /**
  * Blocksy Child Boutique Theme functions and definitions
+ * Inspired by Kaka by Eliza - Tailored for Indian Fashion Boutiques
  *
  * @package BlocksyChildBoutique
  */
 
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
+    exit;
 }
 
+define('BLOCKSY_CHILD_BOUTIQUE_VERSION', '1.0.0');
+define('BLOCKSY_CHILD_BOUTIQUE_DIR', get_stylesheet_directory());
+define('BLOCKSY_CHILD_BOUTIQUE_URI', get_stylesheet_directory_uri());
+
 /**
- * Enqueue parent and child stylesheets
+ * 1. Enqueue Styles and Scripts
  */
-function blocksy_child_boutique_enqueue_styles() {
+function blocksy_child_boutique_scripts() {
+    // Parent theme style
     wp_enqueue_style(
         'blocksy-parent-style',
         get_template_directory_uri() . '/style.css'
     );
+
+    // Boutique Core Styles
+    wp_enqueue_style(
+        'blocksy-boutique-core',
+        BLOCKSY_CHILD_BOUTIQUE_URI . '/assets/css/boutique-core.css',
+        array('blocksy-parent-style'),
+        BLOCKSY_CHILD_BOUTIQUE_VERSION
+    );
+
+    // Child theme style header
     wp_enqueue_style(
         'blocksy-child-boutique-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array('blocksy-parent-style'),
-        wp_get_theme()->get('Version')
+        get_stylesheet_uri(),
+        array('blocksy-boutique-core'),
+        BLOCKSY_CHILD_BOUTIQUE_VERSION
     );
+
+    // Variation Stock Urgency Handler
+    if (is_product()) {
+        wp_enqueue_script(
+            'blocksy-boutique-variations',
+            BLOCKSY_CHILD_BOUTIQUE_URI . '/assets/js/boutique-variations.js',
+            array('jquery'),
+            BLOCKSY_CHILD_BOUTIQUE_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'blocksy-boutique-sticky-atc',
+            BLOCKSY_CHILD_BOUTIQUE_URI . '/assets/js/sticky-atc.js',
+            array('jquery'),
+            BLOCKSY_CHILD_BOUTIQUE_VERSION,
+            true
+        );
+    }
+
+    // Free Shipping Calculator in Mini-Cart
+    wp_enqueue_script(
+        'blocksy-boutique-free-shipping',
+        BLOCKSY_CHILD_BOUTIQUE_URI . '/assets/js/free-shipping-progress.js',
+        array('jquery'),
+        BLOCKSY_CHILD_BOUTIQUE_VERSION,
+        true
+    );
+
+    // Localize cart subtotal & threshold
+    $cart_subtotal = (function_exists('WC') && WC()->cart) ? WC()->cart->get_subtotal() : 0;
+    wp_localize_script('blocksy-boutique-free-shipping', 'boutiqueSettings', array(
+        'threshold' => apply_filters('boutique_free_shipping_threshold', 999),
+        'subtotal'  => floatval($cart_subtotal),
+        'ajax_url'  => admin_url('admin-ajax.php')
+    ));
 }
-add_action('wp_enqueue_scripts', 'blocksy_child_boutique_enqueue_styles');
+add_action('wp_enqueue_scripts', 'blocksy_child_boutique_scripts');
 
 /**
- * Theme Setup: Add WooCommerce Support & Custom Image Galleries
+ * 2. Theme Setup
  */
 function blocksy_child_boutique_setup() {
     add_theme_support('woocommerce');
@@ -38,33 +90,11 @@ function blocksy_child_boutique_setup() {
 add_action('after_setup_theme', 'blocksy_child_boutique_setup');
 
 /**
- * Stock Urgency Bar Component for Single Product Page
- * Replicates the "Only X items left in stock" counter seen on boutique fashion sites
+ * 3. Include Core Modules
  */
-function blocksy_boutique_stock_urgency_bar() {
-    global $product;
-
-    if (!$product || !$product->is_in_stock()) {
-        return;
-    }
-
-    $stock_qty = $product->get_stock_quantity();
-
-    // Show urgency bar for products with stock between 1 and 5
-    if ($stock_qty && $stock_qty <= 5) {
-        $max_threshold = 10;
-        $progress_percentage = min(100, max(10, ($stock_qty / $max_threshold) * 100));
-        ?>
-        <div class="boutique-stock-urgency-wrapper" data-stock="<?php echo esc_attr($stock_qty); ?>">
-            <div class="boutique-stock-urgency-label">
-                <span>🔥 Only <strong><?php echo esc_html($stock_qty); ?></strong> left in stock</span>
-                <span>Limited Boutique Piece</span>
-            </div>
-            <div class="boutique-stock-urgency-track">
-                <div class="boutique-stock-urgency-progress" style="width: <?php echo esc_attr($progress_percentage); ?>%;"></div>
-            </div>
-        </div>
-        <?php
-    }
-}
-add_action('woocommerce_single_product_summary', 'blocksy_boutique_stock_urgency_bar', 15);
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/stock-inventory.php';
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/order-handling.php';
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/whatsapp-notifications.php';
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/order-tracking.php';
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/inc/sample-data.php';
+require_once BLOCKSY_CHILD_BOUTIQUE_DIR . '/block-patterns/patterns.php';
