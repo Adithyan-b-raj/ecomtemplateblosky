@@ -36,7 +36,7 @@
 
     /* Left Sidebar */
     aside.admin-sidebar {
-      width: 240px;
+      width: 250px;
       background-color: var(--admin-sidebar);
       color: #EEE;
       flex-shrink: 0;
@@ -273,8 +273,8 @@
       background: var(--admin-success);
       color: #FFF;
       border: none;
-      padding: 6px 12px;
-      border-radius: 3px;
+      padding: 8px 14px;
+      border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -292,10 +292,10 @@
       margin-bottom: 6px;
     }
 
-    .form-group input, .form-group select {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
-      max-width: 500px;
-      padding: 8px 12px;
+      max-width: 600px;
+      padding: 9px 12px;
       border: 1px solid var(--admin-border);
       border-radius: 4px;
       font-size: 13px;
@@ -305,6 +305,37 @@
       font-size: 12px;
       color: #646970;
       margin-top: 4px;
+    }
+
+    /* Image upload box */
+    .image-drop-area {
+      border: 2px dashed #CCD0D4;
+      border-radius: 6px;
+      padding: 24px;
+      text-align: center;
+      background: #F9F9F9;
+      cursor: pointer;
+      max-width: 600px;
+      margin-bottom: 12px;
+    }
+
+    .image-drop-area:hover {
+      border-color: var(--admin-primary);
+      background: #FFFDF9;
+    }
+
+    .image-preview-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .image-preview-thumb {
+      width: 75px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--admin-border);
     }
 
     /* Toast notification */
@@ -333,6 +364,7 @@
     </div>
     <nav class="sidebar-nav">
       <div class="nav-item active" onclick="switchTab('dashboard')">📊 Dashboard</div>
+      <div class="nav-item" onclick="switchTab('add-product')">➕ Add New Product & Stock</div>
       <div class="nav-item" onclick="switchTab('matrix')">📦 Stock Matrix</div>
       <div class="nav-item" onclick="switchTab('orders')">🚚 Orders & Dispatch</div>
       <div class="nav-item" onclick="switchTab('settings')">⚙️ Boutique Settings</div>
@@ -420,7 +452,154 @@
       </div>
     </div>
 
-    <!-- TAB 2: QUICK INVENTORY MATRIX -->
+    <!-- TAB 2: ➕ ADD NEW PRODUCT (PHOTOS, STOCK, SIZES, DETAILS) -->
+    <div class="tab-pane" id="tab-add-product">
+      <div class="content-box">
+        <div class="box-title">
+          <span>👗 Add New Boutique Piece (Kurthi, Dress, Top)</span>
+          <button class="btn-primary" onclick="publishNewProduct()">Publish to Online & In-Store</button>
+        </div>
+
+        <form id="newProductForm" onsubmit="event.preventDefault(); publishNewProduct();">
+          <!-- 1. Product Title & Category -->
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Product Title *</label>
+              <input type="text" id="newProdTitle" required placeholder="e.g. Indigo Bloom Handcrafted Kurthi" value="Indigo Bloom Pure Cotton Kurthi">
+              <div class="desc">Displayed on shop catalog and product page.</div>
+            </div>
+            <div class="form-group">
+              <label>Category *</label>
+              <select id="newProdCategory">
+                <option value="Kurthis">Kurthis</option>
+                <option value="Peplum Tops">Peplum Tops</option>
+                <option value="Dresses">Dresses</option>
+                <option value="Short Kurti">Short Kurti</option>
+                <option value="Co-ord set">Co-ord set</option>
+                <option value="In Store">In Store Only (Counter)</option>
+                <option value="Clearance Sale">Clearance Sale</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. Pricing & POS Barcode -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Regular Price (₹) *</label>
+              <input type="number" id="newProdPrice" required placeholder="1450" value="1450">
+            </div>
+            <div class="form-group">
+              <label>Sale / Discount Price (₹)</label>
+              <input type="number" id="newProdSalePrice" placeholder="Optional (e.g. 1290)">
+            </div>
+            <div class="form-group">
+              <label>Barcode / SKU (for WCPOS Scanner)</label>
+              <input type="text" id="newProdSku" placeholder="KB-IND-01" value="KB-IND-01">
+            </div>
+          </div>
+
+          <!-- 3. Photo Uploads (Main Front Image + Secondary Hover Swap Image) -->
+          <div style="margin: 20px 0; border-top: 1px solid #EEE; padding-top: 20px;">
+            <label style="display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px;">📷 Product Photos (3:4 Portrait Ratio)</label>
+            <p class="desc" style="margin-bottom: 14px;">Upload the primary front angle and a secondary back angle for the <strong>automatic hover-swap effect</strong> seen on Kaka by Eliza.</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 6px;">Primary Front Photo *</label>
+                <div class="image-drop-area" onclick="simulateUpload('front')">
+                  <div style="font-size: 28px; margin-bottom: 6px;">📸</div>
+                  <strong style="font-size: 13px;">Click to Upload Front Photo</strong>
+                  <div style="font-size: 11px; color: #888; margin-top: 4px;">JPG, PNG, WebP (3:4 Portrait)</div>
+                </div>
+                <div class="image-preview-row" id="frontPreviewRow">
+                  <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=300&q=80" class="image-preview-thumb" alt="Front Preview">
+                  <div style="font-size: 11px; color: var(--admin-success); align-self: center;">✓ Front Angle Loaded</div>
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 6px;">Secondary Gallery Photo (Hover Image)</label>
+                <div class="image-drop-area" onclick="simulateUpload('back')">
+                  <div style="font-size: 28px; margin-bottom: 6px;">🔄</div>
+                  <strong style="font-size: 13px;">Click to Upload Back/Hover Photo</strong>
+                  <div style="font-size: 11px; color: #888; margin-top: 4px;">Appears automatically when customer hovers</div>
+                </div>
+                <div class="image-preview-row" id="backPreviewRow">
+                  <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=300&q=80" class="image-preview-thumb" alt="Back Preview">
+                  <div style="font-size: 11px; color: var(--admin-success); align-self: center;">✓ Hover Angle Loaded</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Size Variations & Stock Quantities Matrix -->
+          <div style="margin: 20px 0; border-top: 1px solid #EEE; padding-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div>
+                <label style="font-size: 14px; font-weight: 700; display: block;">📏 Size Variations & Stock Quantities</label>
+                <p class="desc">Enter the exact stock pieces available. If stock is between 1–5, the store automatically shows the <strong>"🔥 Only X left in stock"</strong> urgency bar.</p>
+              </div>
+              <span style="font-size: 11px; color: var(--admin-success); background: #E8F5E9; padding: 4px 8px; border-radius: 3px; font-weight: 600;">Zero-Backorders Active</span>
+            </div>
+
+            <table class="admin-table" style="background: #FAFAFA; border: 1px solid #E2E4E7; border-radius: 4px;">
+              <thead>
+                <tr>
+                  <th>Size</th>
+                  <th>Inventory Quantity (Pieces)</th>
+                  <th>Urgency Bar Preview</th>
+                  <th>Stock Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>XS</strong> (Bust 34)</td>
+                  <td><input type="number" id="stockXS" value="1" min="0" style="width: 70px; padding: 6px; font-weight: 700; text-align: center;"></td>
+                  <td><span style="color: var(--admin-primary); font-weight: 600; font-size: 12px;">🔥 Only 1 left in stock!</span></td>
+                  <td><span style="color: var(--admin-success); font-weight: 600; font-size: 12px;">In Stock</span></td>
+                </tr>
+                <tr>
+                  <td><strong>S</strong> (Bust 36)</td>
+                  <td><input type="number" id="stockS" value="2" min="0" style="width: 70px; padding: 6px; font-weight: 700; text-align: center;"></td>
+                  <td><span style="color: var(--admin-primary); font-weight: 600; font-size: 12px;">🔥 Only 2 left in stock!</span></td>
+                  <td><span style="color: var(--admin-success); font-weight: 600; font-size: 12px;">In Stock</span></td>
+                </tr>
+                <tr>
+                  <td><strong>M</strong> (Bust 38)</td>
+                  <td><input type="number" id="stockM" value="1" min="0" style="width: 70px; padding: 6px; font-weight: 700; text-align: center;"></td>
+                  <td><span style="color: var(--admin-primary); font-weight: 600; font-size: 12px;">🔥 Only 1 left in stock!</span></td>
+                  <td><span style="color: var(--admin-success); font-weight: 600; font-size: 12px;">In Stock</span></td>
+                </tr>
+                <tr>
+                  <td><strong>L</strong> (Bust 40)</td>
+                  <td><input type="number" id="stockL" value="0" min="0" style="width: 70px; padding: 6px; font-weight: 700; text-align: center; border-color: #D32F2F; color: #D32F2F;"></td>
+                  <td><span style="color: #888; font-size: 12px;">⚠️ Sold Out (Disabled)</span></td>
+                  <td><span style="color: #D32F2F; font-weight: 700; font-size: 12px;">Out of Stock</span></td>
+                </tr>
+                <tr>
+                  <td><strong>XL</strong> (Bust 42)</td>
+                  <td><input type="number" id="stockXL" value="1" min="0" style="width: 70px; padding: 6px; font-weight: 700; text-align: center;"></td>
+                  <td><span style="color: var(--admin-primary); font-weight: 600; font-size: 12px;">🔥 Only 1 left in stock!</span></td>
+                  <td><span style="color: var(--admin-success); font-weight: 600; font-size: 12px;">In Stock</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 5. Product Description & Fabric Details -->
+          <div class="form-group" style="margin-top: 20px;">
+            <label>Product Details & Fabric Specifications</label>
+            <textarea rows="4" style="max-width: 100%;" placeholder="e.g. Crafted from 100% pure breathable cotton with handcrafted wooden buttons. 4-6 days delivery.">Crafted from 100% pure breathable cotton with natural indigo dye. Handcrafted in Kerala. 2-3 days processing, 4-6 days all-India delivery.</textarea>
+          </div>
+
+          <div style="margin-top: 25px;">
+            <button type="submit" class="btn-primary" style="padding: 12px 28px; font-size: 14px;">Publish Product & Sync Stock</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 3: QUICK INVENTORY MATRIX -->
     <div class="tab-pane" id="tab-matrix">
       <div class="content-box">
         <div class="box-title">
@@ -502,7 +681,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: ORDERS & DISPATCH -->
+    <!-- TAB 4: ORDERS & DISPATCH -->
     <div class="tab-pane" id="tab-orders">
       <div class="content-box">
         <div class="box-title">
@@ -557,7 +736,7 @@
       </div>
     </div>
 
-    <!-- TAB 4: BOUTIQUE SETTINGS -->
+    <!-- TAB 5: BOUTIQUE SETTINGS -->
     <div class="tab-pane" id="tab-settings">
       <div class="content-box">
         <div class="box-title">
@@ -613,6 +792,7 @@
 
       const headings = {
         'dashboard': 'Boutique Operations Dashboard',
+        'add-product': 'Add New Product & Stock Quantities',
         'matrix': 'Stock & Inventory Matrix',
         'orders': 'Order Fulfillment & WhatsApp Dispatch',
         'settings': 'Boutique Store Configuration'
@@ -642,6 +822,20 @@
     function saveSettings(e) {
       e.preventDefault();
       showToast("✓ Boutique settings saved successfully!");
+    }
+
+    function simulateUpload(type) {
+      showToast(`📸 ${type === 'front' ? 'Primary Front' : 'Secondary Hover'} Photo Selected!`);
+    }
+
+    function publishNewProduct() {
+      const title = document.getElementById('newProdTitle').value;
+      const cat = document.getElementById('newProdCategory').value;
+      const price = document.getElementById('newProdPrice').value;
+      showToast(`🎉 "${title}" published to ${cat} at ₹${price}! Stock synced to Online & In-Store.`);
+      setTimeout(() => {
+        switchTab('matrix');
+      }, 1500);
     }
   </script>
 </body>
